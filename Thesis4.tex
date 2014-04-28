@@ -1,0 +1,56 @@
+\documentclass[lof,lot,los,12pt,advisercopy]{puseniorthesis}
+%options to class:
+% lof - generate list of figures
+% lot - generate list of tables
+% Xpt - font size
+% filecopy - note that this is 'File Copy' on title page
+% advisercopy - note that this is 'Adviser Copy' on title page
+% readercopy - note that this is 'Reader Copy' on title page
+% progress - change title page to say 'Progress Report' instead of 'Final Report'
+
+\usepackage{xcolor}
+\usepackage{graphicx} %need for \includegraphics
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{comment}
+\usepackage{float}
+
+%required inputs:
+\author{Gideon Grossman}
+\classyear{`14}
+\adviser{Professor Steingart}
+\reader{Professor Julia Mikhailova}
+\title{Design of  a Low-Cost Frequency Response Analyzer for Electrochemical Impedance Spectroscopy}
+\dept{Mechanical and Aerospace Engineering}
+\submitdate{May 2, 2014}
+\course{MAE 442D}
+\abstract{\input AbstractDraft1} %read from file abstract.tex
+
+%optional inputs (any of these can be omitted)
+%\extranotes{These are a few lines of optional notes} 
+%\dedication{To myself.}
+\acknowledgements{\input Acknowledgements1}
+
+\numberwithin{equation}{section}
+
+\begin{document}
+\include{Motivation3} %read from file IntroDraft1.tex
+\include{EIS3}
+\include{ProjectDescription}
+\include{Futurework}
+%\include{Body1} %read from file Body1.tex
+\include{SummaryConclusionsDraft1} %read from file SummaryConclusionsDraft1.tex
+\begin{center}
+This paper represents my own work in accordance with University regulations.  \newline
+/s/ Gideon Grossman
+\end{center}
+
+\bibliography{/Volumes/GIDEON/Thesis_Spring/ThesisReport/ThesisReferences/ThesisReferences}
+\bibliographystyle{plain}
+\nocite{*}
+
+\appendix
+
+%\include{app1}  %read from file app1.tex
+
+\end{document}

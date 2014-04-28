@@ -1,0 +1,138 @@
+\chapter{Overview of electric vehicle battery packs and battery management systems}
+	\section{The growth of the electric vehicle industry}
+		The electric vehicle (EV) industry has recently experienced rapid growth and is projected to continue expanding rapidly over the next few decades as individuals and governments seek to reduce greenhouse gas emissions and dependence on foreign oil. Over 40 EV models exist today ranging from full-sized passenger cars to buses and racecars.  Almost all major automobile manufacturers sell at least one EV model. Just a few of the more well-known models include the BMW i3, the Nissan Leaf, the Ford Focus Electric and Tesla's Roadster and Model S. The United States Energy Information Administration predicts that annual light-duty EV sales in the U.S. will more than double between 2014 and 2040 from 466,400 vehicles -3.4\% of total light-duty vehicle sales - in 2014 to 1,157,800 vehicles - 6.8\% of total sales - in 2040 \cite{EIAEV}.  However, this projection is uncertain and in light of recent news, may be an underestimate. In March of 2014, Tesla Motors  anounced plans to build its own battery factory that will purportedly produce more lithium-ion batteries per year by 2020 than the entire world manufactured in 2013. This scale would enable Tesla alone to manufacture 500,000 EVs each year while reducing the cost per kWh of its batteries by 30\% within only the first year of mass production and by 50\% in 2020 \cite{Gigafactory}. The history of Ford says that Tesla's big plans may very well pan out. Ford Motor Company's large factory reduced the price of internal combustion engine vehicles by more than 50\% \cite{GreenTechTeslaFord}. In short, it is certainly reasonable to assume the EV industry will continue growing over the next few decades. 
+		$\addsymbol{EV}{electric vehicle}$
+		%Tesla building new factory
+		%all big automobile manufacturers have an EV, HEV or PHEV model.
+%
+	\section{EV battery packs}
+		 There are three main types of EVs: hybrid EVs (HEVs) containing an internal combustion engine and battery that is charged through regenerative braking; plug-in hybrid EVs (PHEVs) and battery EVs (BEVs). This paper will focus on BEVs, rather than HEVs or PHEVs because a BEV's battery pack is the most complex and therefore has the greatest need for smart battery management systems. %Check this.
+A BEV battery pack contains thousands of individual battery cells combined to achieve a desired net capacity. The cells are arranged hierarchically with 8 to 12 individual cells connected to form what is called a "module" and modules are in turn connected to form a ``pack".  Cells and modules are connected in series and parallel combinations to achieve desired overall pack voltage and current.%Fis up the grammar here %As shown in figure \ref{fig:cellModPack}
+%------I might include a picture here depicting how cells, modules and the pack are connected.------
+		%Battery pack architecture
+Various chemistries that have been used in EV packs include nickel-cadmium, nickel-metal-hydride, lithium-polymer and lithium-iron phosphate. Just one example, the Tesla Roadster, contains 6,831 cylindrical lithium-ion cells that are each 18mm in diameter and 65mm long\cite{TeslaCellSize}. All together, the pack has a 56kWh capacity.
+		%thousands in series and parallel, today mostly Li-ion. 
+
+	\section{Battery management systems}
+Such a complex battery pack, containing thousands of components and connections, requires a smart system that can monitor the pack and ensure its safe and optimal performance. For this reason, there is a battery management system (BMS) in every EV and as a matter of fact in many other portable electronic devices as well, including laptops. A BMS monitors EV pack parameters and executes functions to ensure the pack operates within its safe temperature and voltage windows. Existing BMS technology used in laptops and other portable electronics is not capable of satisfying the safety and operational requirements of an EV pack. An EV pack is much more complex and must meet power requirements -for acceleration- in addition to energy capacity. Given the rapid growth of the EV industry and these unique EV BMS challenges,  many companies, universities and national laboratories around the world are currently pouring money into the development of advanced BMSs for EVs. Just a few companies include Beihing Key Power Technology Co., Huizhou Epower Electronic Co. Ltd, British REAPSystems and Australian EV power. \cite[p.~275]{LanguangLuXuebingHanJianqiuLiJianfengHua2013}. A BMS detects temperature, voltage and current of the entire battery pack. Some BMSs also detect smoke, insulation %what does it mean to detect insulation?
+and vehicle collisions. The BMS uses these inputs to perform internal estimations of battery states, such as SOC and $\addsymbol{SOC}{state of charge}$ SOH $\addsymbol{SOH}{state of health}$  and then executes certain functions based on these states. Such functions include: determining remaining range (The distance the vehicle can drive before running out of battery); maintaining an appropriate operating temperature by means of fans and electric heaters; controlling charge rate; balancing cells and modules so that the pack may charge and discharge more fully (explained later in this paper); prolonging pack life by determining which cells to extract power from during acceleration and which cells to replace during maintenance;
+and cutting off batteries from the pack when they are too hot, too cold, overcharged or overdischarged to prevent thermal runaway or other damage to the batteries and EV passengers \cite[p.~274]{LanguangLuXuebingHanJianqiuLiJianfengHua2013}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{EV battery pack underutilization}
+	\section{Underutilization overview}
+		EVs underutilize the available capacity in their battery packs for two main reasons:  low resolution safety controls and cell imbalance.
+	\subsection{Underutilization due to safety controls}
+%
+		\subsubsection{Safe temperature and voltage operating windows}
+		To ensure safety, EV batteries should remain within certain voltage and temperature ranges. These windows also ensure reliable battery performance, but the primary concern is safety. Manufacturers of lithium-ion batteries most commonly used in EVs recommend their batteries operate within a voltage range of 1.5V to 4.2V and a temperature range of $-20\,^{\circ}{\rm C}$ to $50\,^{\circ}{\rm C}$ while discharging and $0\,^{\circ}{\rm C}$ to $45\,^{\circ}{\rm C}$ while charging. While similar temperature and voltage limitations have been common for years in laptops, cellphones and other portable electronic products, EVs present a unique challenge in that issues may arise in any of their thousands of cells. Furthermore, the dense packing causes more heat buildup than in a smaller product, making thermal runaway a greater concern. What follows are issues that arise when batteries operate outside of these prescribed temperature and voltage ranges\cite[p.~272]{LanguangLuXuebingHanJianqiuLiJianfengHua2013}.% -----(I'm going to include several lines here SEI film and electrolyte decomposition, thermal runaway, lattice collapse with overdischarge, etcetera).------
+		\subsubsection{Battery cell structure overview}
+		Before delving into the safety risks in an EV battery pack, it is important to first provide a basic understanding of the components and working mechanism of a conventional battery cell. The fundamental components of a battery cell are the anode, cathode, electrolyte and current collectors (See figure \ref{fig:CellStructure}). 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{CellStructure.png}
+\caption{Basic components of a Li-ion cell
+\label{fig:CellStructure}
+\cite{ElectropaediaCellChemistries}}
+\end{figure}
+
+During discharge, active ions in the electrolyte are reduced at the anode and oxidized at the cathode. A separator allows the ions to transport across the electrolyte, but blocks the passage of electrons. Therefore, in order to complete the Faradaic reactions at the electrodes, electrons must travel through an external circuit that connects the two electrodes. This external circuit provides electricity to the load. A Li-ion cell, which is one of the most common chemistries in BEVs, has an anode composed of graphite, a cathode composed of lithium metal oxide and an electrolyte composed of lithium ions dissolved in an organic solvent. During a Li-ion cell's first few charge/discharge cycles, the electrolyte and graphite anode react, forming an SEI, which is a thin layer that protects the anode from side reactions with the electrolyte \cite{SEIFormation}. Highly electronically conductive current collectors enable electrons to efficiently enter and exit the electrodes.
+		\subsubsection{Dangerous consequences of temperature and voltage excursions}
+		If the temperature of a lithium-ion cell exceeds 90$^{\circ}{\rm C}$ to 120$^{\circ}{\rm C}$ the SEI film will decompose, allowing side reactions between the anode and organic electrolyte. These side reactions produce a combustible gas. When the temperature increases above 150$^{\circ}{\rm C}$, the cathode can decompose, producing oxygen. The oxygen then combusts with the gas from the anode/electrolyte side reaction \cite[p.~273]{LanguangLuXuebingHanJianqiuLiJianfengHua2013}. The cell then catches fire, heating up neighboring cells, causing them to also decompose, combust and heat up yet more cells. This chain reaction is called ``thermal runaway" and is one of the primary safety concerns in any battery-powered device \cite{BULiIonSafetyConcerns}. If voltage drops too low or the cell  overdischarges, the copper current collector may dissolve in the electrolyte and then form dendrites on the anode when the cell is recharged. These dendrites can short-circuit the cell by penetrating the separator, thereby allowing electrons to transport internally through the cell.  This internal short-circuit can lead to thermal runaway. At the other extreme, excessive voltage or overcharge will cause the electrolyte and cathode to decompose and lithium metal to deposit on the anode, which is another way of internally short-circuiting the cell\cite[p.~273]{LanguangLuXuebingHanJianqiuLiJianfengHua2013}.
+	%details on what what happens outside T and V windows - Languang 273
+	%thermal runaway = biggest concern
+%staying within T range also makes battery more efficient.  \cite{HabiballahRahimi-EichiUnnatiOhjaFedericoBaronti2013}
+In addition to voltage and temperature excursions, other events that can cause dangerous scenarios include overcharging, charging or discharging at excessively high rates for the particular chemistry and deep discharge\footnote{Deep discharges up to 80\%  of capacity or more may occur when EVs travel long distances\cite[p.~6]{HabiballahRahimi-EichiUnnatiOhjaFedericoBaronti2013}.}.
+		%newspaper articles about Tesla and GM's vehicle recently, Boeing 787 Li-ion batteries.
+		\subsubsection{Sacrificing utilization for safety}
+%Aside from the above safety concerns, EV battery packs can also perform sub-optimally for various reasons. For instance, cell imbalance can reduce utilizable pack capacity. Before explaining imbalance, it is necessary to provide a brief description of battery pack architecture. 
+
+\subsection{Underutilization due to cell imbalance}
+Production, packaging, cycling and temperature gradients that arise during use introduce differences in SOC, SOH and other properties among cells in the pack. These differences pose challenges in charging, discharging and maintaining the pack. For instance, it is only possible to charge a module until the point when one cell reaches its full capacity regardless of how much  capacity remains unused in the other cells. This is because the cells in a module are strung together in series. Similarly, during discharge, a string of cells stops supplying power as soon as any cell drops below the cutoff voltage. The vehicle cannot utilize charge left over in the other cells in the string.  
+%Make a section titled 3 or 4 (acceleration) ways in which EVs underutilize battery capacity
+%shutting off modules that exceed safe operating T or V in exchange for safety
+% incomplete charging
+%incomplete discharging
+%acceleration?
+%%%%%%%%%%%
+%%%%%%%%%
+%%%%%%
+%
+%
+\chapter{How today's EV BMSs deal with underutilization}
+	\section{Cell balancing}
+One intelligent way a BMS can minimize capacity underutilization is through cell balancing - the equalization of SOC of each cell in the battery pack. Cell balancing reduces both underutilization due to safety controls and underutilization in charging/discharging. Balancing reduces undertutilization due to safety controls by preventing overcharge/overdischarge, in turn keeping cells within their safe operating temperature and voltage windows. %break into 2 sentences?
+Balancing also allows strings of cells connected in series to completely charge and discharge. %Equalizing cells and modules 
+%explain why some cells have dif. SOCs - Languang
+There are two types of cell balancing: passive and active. In the passive method, also called "dissipative balancing", the BMS uses resistors to dissipate charge from cells with relatively high charge by drawing some of the cells' current through dissipative resistors. For instance, imagine that the top cell in the string shown in figure \ref{fig:Dissipative}) has a higher SOC than the rest of the string. In order to allow the remaining cells to continue charging, while preventing the top cell from overcharging, the switch in the top circuit closes to dissipate energy from the top cell, reducing its SOC.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.2\textwidth]{SendyneDissipativeBalancing.png}
+\caption{Dissipative balancing
+\label{fig:Dissipative}
+\cite[p.~2]{SendyneChargeControllerPatent}}
+\end{figure}
+
+In active balancing, the BMS transfers energy from cells with relatively high SOCs to cells with relatively low SOCs. Figure \ref{fig:ChainBalancing} shows one circuit design that executes active balancing. This particular design, called ``chain balancing," moves charge between neighboring cells with a two-cell balancing circuit.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\textwidth]{SendyneChainBalancing.png}
+\caption{Chain balancing
+\label{fig:ChainBalancing}
+\cite[p.~2]{SendyneChargeControllerPatent}}
+\end{figure}
+
+One limitation to chain balancing  is that in order to balance two cells that do not immediately neighbor each other, the circuit must transfer the charge through all intermediate cells. Heat losses during each transfer add up, making this particular active balancing design only slightly more energy efficient than passive balancing. However, in 2012, Sendyne Corporation patented what they claim to be a more efficient active balancing technique. As described by their patent, power resistors perform what is called ``half-bridge duty" to remove charge from high-SOC cells and perform what is called ``synchronous rectification duty" to deliver charge to low-SOC cells. The cells need not immediately neighbor each other. 
+As one can imagine,  active balancing is attractive because it saves energy, whereas passive balancing wastes energy. Moreover, the heat released by resistors in passive balancing can shorten the pack's lifetime. Nevertheless, EV BMSs more commonly use passive balancing, because, active balancing is more complex and requires accurate estimations of each individual cell's SOC \cite[p.~284]{LanguangLuXuebingHanJianqiuLiJianfengHua2013}. As will be explained in the section titled ``SOC estimation...", limited accuracy and high cost of SOC estimation techniques in today's BMSs are hinder the implementation of efficient active balancing.
+	\section{Battery states}
+Battery states are physical parameters that define the remaining capacity and lifetime of a battery. The two most important battery states are the state of charge and state of health.%Balancing and many of the BMS's other functions rely on the BMS's ability to estimate battery states, including state of charge (SOC), state of health (SOH) and state of function (SOF). 
+		\subsection{State of charge}
+SOC is defined as the ratio of available capacity $C_{A}$ in a battery cell, module or pack over the maximum capacity $C_{Max}$ after taking into account the battery's aging and degradation (Equation\ref{eq:SOC}).
+\begin{equation}\label{eq:SOC}
+SOC = \frac{C_{A}}{C_{Max}}
+\end{equation}
+		\subsection{State of health}
+SOH is defined as the ratio of $C_{Max}$ over the initial rated capacity $C_{R}$ as provided by the manufacturer (Equation \ref{eq:SOH}). This metric gives an idea of how many more charge/discharge cycles the battery can endure before failing. 
+\begin{equation}\label{eq:SOH}
+SOH = \frac{C_{Max}}{C_{R}}
+\end{equation}
+
+		\subsection{Other battery states}
+SOF is a metric sometimes used to express the ability of a cell to meet its energy or power requirements. It is a function of SOC and SOH and in one interpretation can be defined as 1 if the cell meets its performance requirements and 0 if it does not.
+	\section{SOC estimation techniques commonly used today and their limitations}
+It is not possible to easily measure SOC and SOH directly from the battery terminals. Rather, the BMS must estimate these states based on voltage, current and temperature measurements\cite[p.~9]{HabiballahRahimi-EichiUnnatiOhjaFedericoBaronti2013}. Accurate SOC estimation is arguably one of the most important tasks of the BMS because the more accuratelythe SOC is known, the more efficiently the BMS can balance cells and predict remaining driving range.  The following sections will introduce some common techniques for estimating SOC and detail their shortcomings. This will motivate the need for the development of a more effective SOC estimation technique. %This will motivate the need for a lower cost, in-situ, online tool for dynamic SOC measurement.
+
+		\subsection{Coulomb counting}
+Coulomb counting, one of the most common methods, calculates SOC by discharging the cell at a constant rate and integrating the current (i) $\addsymbol{i}{current}$ over time (See equation \ref{eq:CoulombCounting}).
+\begin{equation}\label{eq:CoulombCounting}
+SOC = \frac{\int i\;dt}{C_{Max}}
+\end{equation}
+This technique is simple and easy to perform, but takes a long time, requires knowledge of SOC at the start of the test and is prone to measurement errors.
+The three methods for measuring the current all have drawbacks. The simplest method is to  draw the current through a shunt (a small resistor\cite{Shunts}) with known resistance,  measure the voltage drop across the shunt and divide voltage by resistance to calculate current. The drawbacks of the current shunt method are the dissipation of some of the cell's power and inaccurate meausurements of low currents. A second method is to utilize the Hall effect and indirectly measure the current by sensing fluctuations in the magnetic field that the current induces \cite{HallEffect}. This method is more costly, cannot measure high currents and sensitive to noise \cite{BUSOCDetermination}. Finally, magnetoresistive sensors can measure current more accurately than the current shunt and Hall effect methods, but are even more expensive\cite{BUSOCDetermination}. In addition to these inherent limitations in current measurement methods (limited current ranges, high cost and power dissipation), Coulomb counting suffers from several other limitations. For example, Coulomb counting relies on knowledge of the SOC before the cell begins discharging \cite{BUSOCDetermination}. Thus, an inaccurate estimation of initial SOC can be a source of error accumulation with each consecutive SOC estimation. Coulomb counting also slightly overestimates SOC because the technique ignores Coulombic efficiency and self discharge. Coulombic efficiency is the round-trip efficiency of the battery, or the ratio of energy output  to energy input. The output energy is always less than the input quantity because of kinetic, ohmic and mass transport losses within the cell. For reference, a typical Li-ion cell has a Coulombic efficiency of 3\%. All batteries also self discharge to some extent. Self discharge refers to the degradation of battery capacity due to electronic conduction through the electrolyte, rather than through an applied load. For reference, a Li-ion cell self discharges less than 3\% of its capacity over the course of a month and is therefore not quite as detrimental to ignore in Coulomb counting as is Coulombic efficiency, but still a source of inaccuracy. %Describe self-discharging more in depth
+%%Explain self discharge.
+%%Explain Coulombic efficiency. One final limitation of Coulomb counting is that it takes a long time %HOW LONG?? 
+\cite{BUSOCDetermination}.
+%%%%%%%%%%
+		\subsection{Open-circuit voltage measurement}
+The open-circuit voltage (OCV)  $\addsymbol{OCV}{open circuit voltage}$ method determines SOC from OCV measurements and knowledge of the cell's voltage versus SOC discharge curve.  This method is very accurate, for battery chemistries, like lead acid (See figure \ref{fig:LeadAcidDischargeCurve}) , in which OCV decreases more or less directly proportionately to SOC. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{LeadAcidDischargeCurve.png}
+\caption{OCV-SOC curve for a lead acid battery.
+\label{fig:LeadAcidDischargeCurve}
+\cite{BUSOCDetermination}}
+\end{figure}
+However, in cases where the OCV-SOC curve is relatively flat, such as in approximately 80\% of the operating ranges of a lithium-manganese, lithium-phosphate and nickel metal hydride (NMC) $\addsymbol{NMC}{nickel metal hydride}$ cells \cite{MeasureSOC} (See figure \ref{fig:dischargeCurve}), even a slight error in OCV measurement results in a large SOC estimation error. 
+\begin{figure}[H]
+\centering
+\includegraphics[width= 0.5\textwidth]{HabiballahDischargeCurve.png}
+\caption{OCV-SOC curve for a Li-FePO$_{4}$ battery.
+\label{fig:dischargeCurve}
+\cite[p.~8]{HabiballahRahimi-EichiUnnatiOhjaFedericoBaronti2013}}
+\end{figure}
+Furthermore, the OCV method only works for cells that are at equilibrium, which requires that the battery has been at rest for a minimum of four hours.  Some battery manufacturers advise 24 hour resting periods. Clearly, OCV is not a practical technique for online SOC estimation. The term ``online" means while the battery is being used (e.g. while an EV is charging or driving) \cite{HabiballahRahimi-EichiUnnatiOhjaFedericoBaronti2013}. 
+%%%%%%%
+		\subsection{Specific gravity measurement}
+For the sake of providing a complete discussion of common SOC estimation techniques, it is worth mentioning that it is possible to determine SOC in a lead acid battery from specific gravity (SG) $\addsymbol{SG}{specific gravity}$ measurements of the electrolyte, because the concentration of the active electrolyte, sulphuric acid, decreases as the cell discharges\footnote{specific gravity is the density of a fluid normalized by the density of a reference fluid. The reference fluid is often water.}. The SG method is appealing because an electronic sensor placed inside the cell can continuosly measure SG and estimate SOC. However, the technique is not applicable to other battery chemistries, including lithium-ion chemistries \cite{BUSOCDetermination}.
+%%%%%%%%
+		\subsection{Fuzzy logic, neural networking and Kalman filtering}

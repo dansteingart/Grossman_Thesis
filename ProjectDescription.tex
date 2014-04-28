@@ -1,0 +1,140 @@
+\chapter{Low-cost frequency response analyzer}
+	\section{Design approach}
+	\section{Materials}
+1. Syscomp CircuitGear CGR-101 digital oscilloscope and waveform generator (Figure \ref{Oscope}) with a maximum sampling rate of 20Msamples/s an output amplitude of 3V and frequency range of 0.1Hz to 3MHz with a resolution of 0.1Hz. For other specifications, see \cite{CircuitGearSpecs} \newline
+\begin{figure}[H]
+\includegraphics[width = 0.5\textwidth]{SetupOscope.png}
+\caption{CGR-101 digital oscilloscope from Syscomp Electronic Design Ltd.
+\label{Oscope}}
+\end{figure}
+%%%%%%%%%%%%%%
+2. A graphical user interface (GUI) $\addsymbol{GUI}{graphical user interface}$ that came with the CGR-101 device \newline (See Figure \ref{GUI}). 
+ In ``circuit gear mode", the GUI displays input and output signals (See Figure \ref{GUIsineWaves}, while in ``network analyzer mode", the GUI displays Bode plots of the circuit impedance (See Figure \ref{Jan25Bode2}).
+%
+\begin{figure}[H]
+\includegraphics[width=0.8\textwidth]{GUI.png}
+\caption{CGR-101 graphical user interface in circuit gear mode
+\label{GUI}}
+\end{figure}
+%
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth]{GUIsineWaves.png}
+\caption{CGR-101 GUI in ``circuit gear mode" displaying input and output signals of the series RC circuit
+\label{GUIsineWaves}}
+\end{figure}
+%
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth]{Jan25Bode2.png}
+\caption{CGR-101 GUI in ``network analyzer mode" displaying Bode plots of the series RC circuit's impedance
+\label{Jan25Bode2}}
+\end{figure}
+%
+3. A 100$\Omega$ resistor \newline
+4. A 100$\mu$Farad capacitor \newline
+5. A breadboard \newline
+6. Python software and the numpy package \newline
+7. 3 probes\newline
+8. 1 USB cord\newline
+	\section{Experimental Setup}
+The entire experimental setup can be thought of as three interconnected components: an RC circuit; the oscilloscope; and the laptop containing the Python program%and CGR-101 GUI
+. The simple RC circuit consists of the 100$\Omega$ resistor and 100$\mu$Farad capacitor in series (Figure \ref{Circuit}). \newline 
+\begin{figure}[H]
+\includegraphics[width = 0.5\textwidth]{SetupCircuitBest.png}
+\caption{Series RC circuit with a 100$\Omega$ resistor and a 100$\mu$Farad capacitor
+\label{Circuit}}
+\end{figure}
+I connected the oscilloscope to the circuit as shown in figures \ref{SetupWithProbesUSB} and \ref{CircuitWithProbes}.\newline
+The black output probe sends perturbation signals from the oscilloscope to the circuit and the yellow and red probes (i.e. inputs A and B) read the voltages before and after the capacitor in the RC circuit and return these voltage readings to the oscilloscope. The grey cord connected to the right side of the oscilloscope in figure \ref{SetupWithProbesUSB} is a USB cord that connects the oscilloscope to the laptop. The laptop powers the device and  sends and recieves signals to and from the device. 
+\begin{figure}[H]
+\includegraphics[width = 0.5\textwidth]{SetupWithProbes.png}
+\caption{Probe/Oscilloscope connections: The black probe sends the oscilloscope's output signal to the circuit. The yellow probe(connected to channel A) and the red probe (connected to channel B) send the voltage readings from the circuit to the oscilloscope. A grey USB connection on the opposite end of the device connects the device to the computer for power and communication.
+\label{SetupWithProbesUSB}}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width = 0.5\textwidth]{SetupProbesZoomedIn.png}
+\caption{A close-up image of the Probe/Oscilloscope connections
+\label{OscopeWithProbes}}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width = 0.8\textwidth]{SetupCircuitWithProbes.png}
+\caption{Oscilloscope probes connected to the RC circuit. The probe with the yellow band (Channel A),  is connected before the capacitor. The probe  with the red band (channel B), is connected after the capacitor. The red alligator clip sends the excitation signal into the circuit from the oscilloscope. The three black clips are connected so that each probe has a common ground.
+\label{CircuitWithProbes}}
+\end{figure}
+
+	\section{Design approach}
+The basic approach was to use the source code that came with the CGR-101 to build a code in Python software that could calculate the magnitude and phase shift of an electrochemical system's impedance across a frequency sweep and plot an impedance spectrum. While in practice, these electrochemical systems will be batteries, I used the RC circuit descibed above instead of a battery while building the code for simplicity. The RC circuit is an appropriate substitution for a battery because it exhibits capacitive and resistive effects. Inductive effects are relatively small in batteries and therefore reasonable to neglect in building this code. Throughout the process of designing the code, I compared my plots to those in the GUI in order to check the accuracy of my code. The advantage of a program built from the ground up in Python, over the GUI that came with the CGR-101, is that the Python program will be able to sync with other software packages to automate on-line, dynamic monitoring. Automated dynamic monitoring is not possible with the prepackaged GUI. For example, with the Python program, it will be possible to automatically adjust the average voltage of the perturbation signal to optimize EV charging. HOW??\newline
+	\section{Firmware overview}
+The code can be divided into a collection of statements that prepare and send the ac perturbation signal and another collection of statemetns that read and analyze the response signal. The former portion of  code generates a waveform with a given frequency and amplitude and sends this signal through the USB connection into the oscilloscope, which in turn forwards the signal to the RC circuit. In the data analysis portion, the code reads in the voltage response of the RC circuit and compares this signal to the input signal. The code displays a plot of the two signals overlayed. Finally, the code will calculate the phase shift and magnitude of the circuit's impedance. At this point, the impedance calculations are innaccurate and need further work.
+
+\section{Code structure}
+The code consists of three Python scripts. The main code, titled syscomdan5.py, manages the frequency sweep by calling the script titled "SingleFrequency.py" sequentially over a range of frequencies. The SingleFrequency script in turn generates a pertubation signal of a particular frequency and analyzes the circuit impedance at this frequency. SingleFrequency.py calls functions from a third script titled "functions.py" .
+
+\section{Installing packages and connecting the device to the computer via USB}
+The main code starts by importing the pylab package, used to generate plots, and the glob package,
+used for connecting to the digital oscilloscope. Then the main code finds and connects to the serial port that the oscilloscope is plugged into. The writer function sends commands from the laptop to the  oscilloscope and the reader function returns data from the  oscilloscope to the laptop. The rest of the main script runs a frequency sweep by calling SingleFrequency.py iteratively over a range of frequencies. This frequency range is stored in a list called "frequencies" and can easily be edited.   
+\section{Programming the AC waveform}
+SingleFrequency.py  first prepares the perturbation signal by calling functions ``UpdateFrequency" and ``UpdateAmplitude" in functions.py to assign the signal a frequency and amplitude.  UpdateFrequency converts a decimal frequency a four byte format that the digital oscilloscope can understand. UpdateAmplitude assigns the ac perturbation signal an amplitude. The input is an 8-bit integer (0-255) that represents the fraction of the maximum possible amplitude (which I believe is always 3V). For instance, 128 will assign an amplitude that is 50\% of 3V, which is 1.5V. After setting signal frequency and voltage, SingleFrequency sends  to the oscilloscope the commands`` S P a" and ``S P b" or ``S P A"  and ``S P B" to set the preamp voltages to the 1/2/5V range or the 500mV/200mV/100mV/50mV range respectively. I'm not sure what the preamp voltage means.``W W"  selects the waveform output. It is possible to select the noise output instead, by replacing ``W W" with ``W N". Next, SingleFrequency prescribes the trigger settings in part by calling TriggerVoltageConversion from the functions.py script. The role of triggering is to stop and restart the ac perturbation such that the display shows a continous wave (But the waves in my display have discontinuities, so I don't think the triggering is effective).  The oscilloscope triggers when either of the two signals (depending on the TriggerSource setting) either rises to or falls (depending on the TriggerPolarity setting) to the trigger voltage. TriggerVoltageConversion converts a binary trigger voltage to a two byte format that the digital oscilloscope can understand, in a similar fashion to UpdateFrequency. I don't know what the gain setting means.  Next, UpdateControlRegister function stores the sample rate, trigger source, trigger polarity and trigger type (internal or external, in something called the ``the control register". During this step, the code also calculates and returns the sample rate, which is useful for determining the x axis coordinates in the plots generated later on. The command ``S C 00" is supposed to determine the number of samples that are to be taken after the trigger event. 
+	%set  frequency, amplitude, ___, _____
+\section{Sending the waveform to the circuit}
+The command ``S G" sends the ac perturbation signal data from the laptop into the oscilloscope, which in turn generates this signal and sends it into the circuit. 
+	%explain the series RC circuits briefly
+		%capacitor becomes full and acts as an open circuit at low frequencies.
+		%Cap acts as a wire at high frequencies
+	\section{Reading and interpreting raw voltage data}
+The command ``S B" returns the raw data from the oscilloscope's voltage readings to the laptop in hexadecimal format.
+	%Potential before and after the capacitor
+	%in raw form ,this is a single list of values in hexadecimal format.
+If there are too many wavelengths in the display, the data is incomprehensible. This issue is called "aliasing." To prevent aliasing, the program responds by iteratively calling SingleFrequency at higher and higher sample rates until there are fewer than a certain number of wavelengths that the user can decide on. The default threshold is 100, because trial and error showed that 100 is small enough to prevent aliasing, but not so small that the program runs an unnecessarily high number of iterations.
+This raw data contains both the input perturbation signal (measured with probe A) and the output signal (measured with probe B), combined in one string of hexadecimal format. The code then goes through a series of steps to convert and separate this raw data into real voltage data for the two distinct signals. First, the code converts the entire string of raw data into decimal format and stores these numbers in a list called ``decimalForamt". Second, the code combines every two consecutive numbers in ``decimalFormat" by multiplying the first number (the high bit) by 255 and adding it to the second number (the low bit). These sums are then stored in a new list called ``dataPoints".  Third, all elements in ``dataPoints" are converted to real voltage values and stored in yet a new list called ``sampleVoltage". Fourth, the code separates all odd elements of ``sampleVoltage" (composing the voltages from input A, i.e. the input perturbation signal) from all even elements of ``sampleVoltage" (composing the voltages from input B, i.e. the output signal). The odd elements are stored in a list called ``VoltageOdd" and the even elements are stored in a list called ``VoltageEven". Fifth, I smoothed the input and output signal data by averaging over every 4 datapoints. %Is this Kalman filtering?
+	\section{Impedance estimation}
+I am trying to calculate the impedance's magnitude, which is equivalent to gain in a Bode plot. To do so, the code calculates the two signals' amplitudes and then divides the input amplitude by the output amplitdue according to equation \ref{eq:VIZ}. I am also trying to estimate the phase angle of the impedance. As can be seen in the code, I try to do this by first measuring the period (which is the same in both signals). I then calculate the phase angle by dividing the time lag between the input and ouput waves by the period and multiplying this fraction by 360 degrees. So far, this method is inaccurate and I think that is because of the way in which I am measuring period and time lag between the signals. My initial approach was to find  all of the points at which the signals rise or fall past 0 volts and consider the period to be the time (time = number of samples / sample rate) between two consecutive rising zeros in the same signal or two consecutive falling zeros in the same signal. I considered the time lag between signals to be the time between the i'th rising zero in signal A and the i'th rising zero in signal B where i was an arbitrary element somewhere far from the discontinuity. In order to make sure the discontinuity (which I think is caused by the trigger event), did not distort the period and phase shift estimations, I considered the period to be the second smallest gap between rising zeros. When this approach produced inaccurate periods and phase shifts, I tried to improve the accuracy by averaging a period estimation based on rising zeros with a period estimation based on falling zeros. The results were still inaccurate. Finally, I  tried to calculate phase shift and period based on the signals' peaks rather than zeros (this is the current state of the code). This too was an inaccurate method. I also explored using scipy.correlate from the scipy package, but still did not get accurate phase angle estimations.
+\section{Plotting input and ouput signals}
+Finally, the code overlays the input and output signals in a plot. Some examples are depicted in the next chapter. I'm not sure why the output signal perturbs about a lower voltage than the input signal. To avoid aliasing, if there are more than a threshold amount of wavelengths in the display, the code loops back and calls SingleFrequency with a lower N (i.e. a higher sample rate)) until there are fewer wavelengths than the threshold value. A threshold value of 1000 is the default.I initally used 50 because this appeared to be the maximum number of wavelengths discernible in plot. However, at 50, the program does not run. Therefore, I changed the threshold to 1000. 1000 is too high and does not prevent aliasing (as far as I understand). A lower value should be used. According to the CGR-101 manual, the display must contain at least 10 samples per wavelength in order to accurately reconstruct the signal. For some reason, the program stops working when N decreases to 8.
+\chapter{Output and results}
+Below are some examples of plots that the code generates. The perturbation frequency and amplitude, trigger settings, gain (albeit inaccurate) and sample rate (samples per second) are listed above the plots.
+\begin{figure}[H]
+\includegraphics[width = 0.5\textwidth]{5Hz117VPlot.png}
+\caption{5Hz, 1.17V amplitude input perturbation and responding output signal: The blue curve represents input A, i.e. the ac perturbation signal sent into the RC circuit. The green curve represents input B, the response voltage following the capacitor in the circuit
+\label{5Hz117VPlot}}
+\end{figure}
+%
+\begin{figure}[H]
+\includegraphics[width = 0.5\textwidth]{10Hz117VPlot.png}
+\caption{10Hz, 1.17V amplitude perturbation and responding output signal: The blue curve represents input A, i.e. the ac perturbation signal sent into the RC circuit. The green curve represents input B, the response voltage following the capacitor in the circuit
+\label{10Hz117VPlot}}
+\end{figure}
+%
+\begin{figure}[H]
+\includegraphics[width = 0.5\textwidth]{100Hz117VPlot.png}
+\caption{100Hz, 1.17V amplitude perturbation and responding output signal: The blue curve represents input A, i.e. the ac perturbation signal sent into the RC circuit. The green curve represents input B, the response voltage following the capacitor in the circuit
+\label{100Hz117VPlot}}
+\end{figure}
+	%Examples of output figures at different frequencies, amplitudes, sampling rates and other settings.
+	%Phase change
+	%Gain
+	%Ultimately Bode plots of impedance versus frequency
+\chapter{Next steps}
+%
+The next step for the code will be to accurately calculate impedance and plot an impedance spectrum in the form of Nyquist and Bode plots. Other work will include figuring out how to utilize the other commands in the CGR-101 source code that are not yet utilized effectively, such as the trigger settings and post trigger count. It is also important to figure out why the output signal is perturbs about a lower voltage than does the input signal. And will also be useful to know why there is a discontinuity in the voltage data and then eliminate this discontinuity. It is possible the discontinuity is due to data that has not been erased from the CGR-101's memory.
+\chapter{Challenges I faced}
+\section{figuring out how to connect the probes to O-scope}
+\section{figuring out how to assign frequency}
+The source code was sparse. It took me a few weeks to understand how to convert the input frequency to the 4 byte format, which the oscilloscope could understand.
+\section{figuring out how to read the voltage data}
+	%for two months the output was all noise or incoherent signals.
+	%Emailed Syscomp Circuitgear requesting more detailed examples of how to use the source code. They responded with no additional examples ___what was their response exactly?
+	% Finally found meaning in the sparse source code and learned I needed to scale the voltages by a _____ value??_____ ,
+\section{Other challenges}
+ Still can't figure out how to accurately calculate magnitude and phase angle. Sometimes the program doesn't run properly for other reasons and the program must be terminated and restarted, or the USB cord must be disconnected from and reconnected to the laptop in order to get the program to run properly.
+
+The program estimates a phase shift that is far greater than it is. This is because the program calculates a period that is too small and phase shift is calculated as follows:
+\begin{equation}
+Phase\;shift =(\frac{D}{P})(360)
+\end{equation}
+where D is the time difference between the peak of the input signal and the next peak in the circuit's response signal. P is the period of either signal (they have the same period).
+%Professor Steingart, I think I'd like to organize 
+%QUESTIONS for Jason Wexler
+%1.How to get url and publication in all citations and automatically alphabetize bibliography
+=%3.What the errors mean when I comile bibTex

@@ -1,0 +1,96 @@
+
+\chapter{Electrochemical impedance spectroscopy}
+Electrochemical impedance spectroscopy (EIS) is yet another technique for estimating the SOC of electrochemical systems. 
+
+	\section{How EIS works}EIS is an experimental technique that measures the impedance of an electrochemical system over a range of applied frequencies. From this relationship of impedance as a function of frequency,  one can extrapolate key properties of the electrochemical system. The hardware that executes EIS in almost all instances today is called a ``frequency response analyzer" (FRA). $\addsymbol{$FRA$}{frequency response analyzer}$ FRAs are also known as "potentiostat/galvanostats". The FRA operates by sending a small (5-15mV) amplitude AC signal of a particular frequency through the electrochemical specimen and then reading  the AC voltage drop across the specimen \cite{B.V.RatnakumarM.C.Smart2002}. %insert picture of a cartoon of the device with probes connected to the circuit.
+The FRA divides the complex voltage $V_{iw}$ drop by the complex input current $i_{iw}$ to determine the impedance $Z_{iw}$\cite{ZBStoynov2009} within the specimen at that particular frequency. In other words, impedance is the transfer function of complex voltage and complex current(See equation \ref{eq:VIZ}). Physically, impedance includes resistance, capacitance and inductance. 
+\begin {equation}\label{eq:VIZ}
+Z_{iw} = \frac{V_{iw}}{I_{iw}}
+\end{equation} 
+The FRA repeats this process with multiple AC signals spanning a range of frequencies as wide as 10MHz down to just a few mHz\cite{ZBStoynov2009} and generates an impedance spectrum. An impedance spectrum shows how impedance varies across frequencies 
+%and is generally presented in a Nyquist plot (See figures \ref{SOC/Imp}, \ref{fig:NyquistStoynov} and \ref{fig:XuNyquist}).  
+Based on known correleations between SOC and patterns in impedance spectra, one can estimate SOC from the impedance spectrum (See figure \ref{fig:SOC/Imp}). 
+\begin{figure}[H]
+\centering
+\includegraphics[width= 0.5\textwidth]{HoweySOCimp.png}
+\caption{Impedance spectra of a lithium iron phosphate battery at different SOCs. Impedance spectra changes with SOC. This makes it possible to extrapolate SOC from impedance.
+\label{fig:SOC/Imp}
+\cite{Howey2014}}
+\end{figure}
+
+The impedance spectrum is often presented in two types of charts - Nyquist and Bode plots. A Nyquist plot  (See Figures \ref{fig:SOC/Imp} and \ref{fig:NyquistStoynov})plots the impedance in a complex plane with the imaginary component on the y axis and the real component on the x axis. Each point on the Nyquist curve corresponds to a different frequency \cite{ZBStoynov2009}. It is useful to separate imaginary from  real impedance because  imaginary impedance indicates the presence of capacitive and inductive effects in the specimen, while real impedance indicates resistive effects. Nyquist plots are also useful because they show distinct sources of impedance as visually distinct arcs. The sizes and shapes of these arcs describe phenomena that may be occurring in the specimen. For instance, arc diameter is proportional to the magnitude of resistance of a particular process. Figure \ref{fig:NyquistStoynov} is an example of a Nyquist plot with three distinct arcs, each representing a different physical process within a lithium ion battery. Again, the diameters of each arc roughly indicate the resistance of each of the three processes.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.5\textwidth]{NyquistExampleStoynov.png}
+\caption{Nyquist plot of a 2,200 mAh Li-ion battery in galvanostatic discharge at a 5\% state of charge measured from 2512Hz to 4mHz
+\label{fig:NyquistStoynov}
+\cite{ZBStoynov2009}}
+\end{figure}
+Bode plots (See Figure \ref{fig:BodeExampleScribner}) complement Nyquist plots by providing a more explicit depiction of impedance as a function of frequency. There are two types of Bode plots showing either the magnitude or phase angle of the impedance on the vertical axis and frequency on the horizontal axis. Together, the magnitude and phase angle fully characterise impedance. Impedance and frequency typically span a wide range, so the Bode plot axes are in logarithmic scales.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{BodeExampleScribner.png}
+ \caption{Bode plots: The top chart displays impedance magnitude versus applied frequency and the bottom chart displays impedance phase angle versus frequency.  \label{fig:BodeExampleScribner} \cite{ScribnerAssociates}}
+\end{figure} 
+
+Different physical processes occurring within the sample have distinct characteristic time-constants and consequently present themelves at different frequecies\cite{ScribnerAssociates}. Therefore, the wider the frequency range is, the more data the technique is able to capture. For instance,  such processes in a battery may include relatively slow solid state ionic diffusion, gaseous diffusion in porous electrodes, faster reaction kinetics and yet faster electronic conduction\cite{ZBStoynov2009}
+\newline
+%The simple RC circuit in Figure \ref{fig:BodeAndNyquistExamples} is an equivalent electrical circuit (EEC), modeling an electrochemical system to aid researchers in their understanding of that system. As will be discussed shortly, EIS is commonly used to validate these so-called EEC models. 
+%%%%%%%
+%%%%%%%%
+%%%%%%%%%%
+%%%%%%%%%%%%%
+%%%%%%%%%%%
+%%%%%%%%
+%%%%%%%
+%%%%%
+	\section{Current applications of EIS}
+		\subsection{Research and development of batteries and fuel cells}
+			\subsubsection{Validation of equivalent electrical circuit models}
+				EIS has already been used for decades in the research and development of energy sources such as batteries and fuel cells. Batteries are ubiquitous in today's society. In addition to EVs, batteries power our iPods, cell phones, laptops and other portable electronic decices. As EVs and  intermittent solar and wind energy penetrate the transportation and electricity markets, batteries and possibly fuel cells will play an even greater role in our daily lives. It is for this reason that many universities, companies and government laboratories are determined to build safer, longer lasting, cheaper, more power dense and energy dense batteries. To accomplish this goal, researchers  are working to understand the physiochemical phenomena that occur within electrochemical cells. One way of uncovering and analyzing these internal processes is by developing analogous ``equivalent electrical circuit" (EEC) $\addsymbol{EEC}{equivalent electrical circuit}$models composed strictly of electrical components. Each component of an EEC is analogous to a physiochemical phenomenon that occurs within the electrochemical cell. The modeler validates the EEC by simulating EIS on an EEC computer model and executing EIS on the real energy source and adjusting the EEC until the impedance spectra match. The EEC can then be used to better understand how the electrochemical systems behave. %I'm still not so clear on the specific details of how EECs provide a better understanding of electrochemical systems.
+The following is an example of an EEC model for lithium ion batteries and the model's corresponding impedance spectrum (Figures \ref{fig:XuEEC} and \ref{fig:XuNyquist} respectively)\cite{JunXu2013}. 
+V$_{OC}$ in figure \ref{fig:XuEEC} is analogous to the actual Li-ion cell's open circuit voltage (OCV) $\addsymbol{OCV}{open circuit voltage}$. The resistor, denoted by R1, is analogous to ohmic resistance in the actual cell. The steep curve in the high-frequency region of the actual cell's impedance spectrum (Figure \ref{fig:XuNyquist}) appears in the EEC model's impedance spectrum as well, thus validating R1 as an accurate analogue to ohmic resistance.  The ZARC element consisting of a resistor and constant phase element in parallel is analogous to Faradaic resistance in the real cell, as is validated by agreement in the shape and size of both spectra's mid-frequency arcs.
+The Warburg element is analogous to  ionic diffusion in the real cell, as is validated by agreement of the nearly linear curve in both spectra's low frequency regions.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.5\textwidth]{EECXu.png}
+\caption{EEC of a Li-ion battery at 50\% SOC
+\label{fig:XuEEC}
+\cite{JunXu2013}}
+\end{figure}
+%
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.5\textwidth]{NyquistXu.png}
+\caption{Impedance spectrum of a Li-ion battery at 50\% SOC
+\label{fig:XuNyquist}
+\cite{JunXu2013}}
+\end{figure}
+%
+Other more complex EECs, such as the ``surface layer model"  shown in figure \ref{fig:EECZhuang} have been useful for modeling the insertion of lithium into intercalation electrodes %In the surface layer model, R$_{el}$ represents resistance of li-ion transport in the elctrolyte, For instance, the EEC in figure
+\cite[p.~192]{Zhuang2012}.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{EECZhuang.png}
+\caption{An EEC modeling the impedance spectra of Li-ion insertion in intercalation electrodes
+\label{fig:EECZhuang}
+\cite{Zhuang2012}}
+\end{figure}
+The widespread use of EIS for validating EECs proves EIS is a mature, useful and reliable tool.
+			\subsubsection{Dependence of fuel cell performance on humidity}
+What follows is one more example that conveys the proven reliability and utility of EIS. Researchers often use EIS in conjunction with EECs that have already been validated to reveal the dependence of energy source performance on different operating conditions. For instance, Scribner et al. used EIS to measure the dependence of fuel cell performance on humidity of the oxygen catholyte and hydrogen anolte. The EIS data plotted in the Nyquist plot below (Figure \ref{fig:ScribnerFuelCell}), reveals that fuel cell performance depends on humidity in three ways: \newline
+\begin{figure}[H]
+\centering
+\includegraphics[width= 0.5\textwidth]{ScribnerHumidity.png}
+\caption{Nyquist plot of impedance in a fuel cell with fuel supplies at 33\% and 100\% relative humidity
+\label{fig:ScribnerFuelCell}
+\cite{ScribnerAssociates}}
+\end{figure}
+1. Because it is well known from EEC modeling that membrane resistance dominates the high frequency region in fuel cell impedance spectra, and the Nyquist plot \ref{fig:ScribnerFuelCell}  shows high frequency impedance is greater in lower humidity, there must be greater membrane resistance in lower humidity. \newline
+2. The 45 degree angle at high frequencies in the low humidity curve (in contrast to the 90 degree angle at high frequency in the high humidity curve) indicates higher ohmic resistance in the fuel cell's catalyst layer in low humidity. \newline
+3. The larger arc diameter in the low humidity curve indicates a higher charge transfer resistance in the oxygen reduction reaction when the fuel cell is in lower humidity.
+	
+	\section{Limitations of EIS for application in EV battery management systems}
+
+
